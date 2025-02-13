@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeakFlowSpace™ Pomodoro Timer</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevents unwanted scrollbars */
+            background-color: transparent !important; /* Ensures full transparency */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: white;
+        }
+
+        .widget-container {
+            background: #2e2e2e !important; /* Grey background like your other widgets */
+            padding: 20px;
+            border-radius: 10px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            overflow: hidden; /* Prevents scrollbars */
+        }
+
+        .header {
+            font-size: 14px;
+            color: white;
+            font-weight: normal;
+            margin-bottom: 10px;
+        }
+
+        .timer-box {
+            background: rgba(147, 23, 168, 0.15); /* Dark-muted pink */
+            color: #9317a8;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 24px;
+            font-weight: bold;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .button {
+            background: #3177C7;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+
+        .button:hover {
+            background: #255a9b;
+        }
+
+        .button.red {
+            background: #c73131;
+        }
+
+        .button.red:hover {
+            background: #9b2525;
+        }
+    </style>
+</head>
+<body>
+    <div class="widget-container">
+        <div class="header">PeakFlowSpace™</div>
+        <div class="timer-box" id="timer">25:00</div>
+        <button class="button" onclick="startTimer()">Start</button>
+        <button class="button red" onclick="resetTimer()">Reset</button>
+    </div>
+
+    <script>
+        let timeLeft = localStorage.getItem("pomodoroTime") || 1500; // Default 25 min
+        let timerInterval;
+        
+        function updateTimerDisplay() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById("timer").textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    localStorage.setItem("pomodoroTime", timeLeft); // Save progress
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    localStorage.removeItem("pomodoroTime"); // Reset when finished
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timeLeft = 1500;
+            localStorage.setItem("pomodoroTime", timeLeft);
+            updateTimerDisplay();
+        }
+
+        updateTimerDisplay(); // Load saved time on page load
+    </script>
+</body>
+</html>
