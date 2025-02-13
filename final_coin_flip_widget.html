@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeakFlowSpace™ Coin Flip</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #242424;
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 320px;
+            margin: auto;
+            position: relative;
+        }
+        .branding {
+            font-size: 14px;
+            color: white;
+            margin-bottom: 3px;
+        }
+        h1 {
+            font-size: 26px;
+            font-weight: bold;
+            color: #2e7cd1;
+            margin-bottom: 10px;
+        }
+        .coin {
+            width: 80px;
+            height: 80px;
+            background-color: #9317a8;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            margin: 20px auto;
+            border: 3px solid #b8860b;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.6s ease-in-out, background-color 0.3s;
+        }
+        .flip-button {
+            background-color: #2e7cd1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: block;
+            margin: auto;
+        }
+        .flip-button:hover {
+            background-color: #255a9b;
+        }
+        .flipping {
+            transform: rotateY(360deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="branding">PeakFlowSpace™</div>
+        <h1>Coin Flip</h1>
+        <div class="coin" id="coin">Heads</div>
+        <button class="flip-button" onclick="flipCoin()">Flip Coin</button>
+    </div>
+
+    <script>
+        function flipCoin() {
+            let coin = document.getElementById("coin");
+            let isHeads = Math.random() < 0.5;
+            
+            // Add flipping effect
+            coin.classList.add("flipping");
+
+            // Change color & text after flip
+            setTimeout(() => {
+                coin.textContent = isHeads ? "Heads" : "Tails";
+                coin.style.backgroundColor = isHeads ? "#2e7cd1" : "#9317a8";
+                coin.classList.remove("flipping");
+            }, 600);
+        }
+    </script>
+</body>
+</html>
