@@ -11,7 +11,7 @@
         overflow: hidden; /* Prevents unwanted scrollbars */
         background-color: transparent !important; /* Ensures full transparency */
     }
-    
+
     body {
         font-family: Arial, sans-serif;
         color: #fff;
@@ -21,37 +21,38 @@
         height: 100vh;
     }
 
+    /* Keeps the grey outer card */
     .widget-container {
-        background: transparent !important; /* Fully transparent background */
-        padding: 0; /* No padding to avoid gaps */
+        background: #2e2e2e !important; /* Restores grey background */
+        padding: 20px;
         border-radius: 10px;
         width: 320px;
         text-align: center;
-        box-shadow: none; /* Removes any unnecessary shadow */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Keeps shadow effect */
         overflow: hidden; /* Prevents scrollbars */
+        position: relative;
     }
 
-        .header {
-            font-size: 14px;
-            color: white;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .tip-box {
-            background: #1e1e1e;
-            color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 16px;
-            font-style: italic;
-            border-left: 5px solid #9317a8;
-            min-height: 50px;
-            text-align: left;
-            white-space: normal;
-            line-height: 1.5;
-            word-wrap: break-word;
-        }
+    /* PeakFlowSpace™ (non-bold) */
+    .header {
+        font-size: 14px;
+        color: white;
+        font-weight: normal; /* Now non-bold */
+        margin-bottom: 10px;
+    }
+
+    /* Inner content remains clean */
+    .tip-box {
+        background: transparent !important; /* Ensures inner area is transparent */
+        padding: 15px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-style: italic;
+        text-align: left;
+        white-space: normal;
+        line-height: 1.5;
+        word-wrap: break-word;
+    }
         .button {
             background: #9317a8;
             color: white;
