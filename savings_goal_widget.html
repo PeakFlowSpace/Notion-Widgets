@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeakFlowSpace™ Savings Goal Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #242424;
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 350px;
+            margin: auto;
+            position: relative;
+        }
+        .branding {
+            font-size: 14px;
+            color: white;
+            margin-bottom: 3px;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2e7cd1;
+            margin-bottom: 10px;
+        }
+        .description {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #cccccc;
+        }
+        .input-box {
+            width: 80%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .calculate-button {
+            background-color: #2e7cd1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: block;
+            margin: auto;
+        }
+        .calculate-button:hover {
+            background-color: #255a9b;
+        }
+        .results {
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="branding">PeakFlowSpace™</div>
+        <h1>Savings Goal Calculator</h1>
+        <p class="description">A quick calculator to see how long it will take to reach your goal. Add it to the database next to it when you want to properly track.</p>
+        <input type="number" class="input-box" id="goalAmount" placeholder="Enter goal amount" step="0.01" min="0">
+        <input type="number" class="input-box" id="monthlySavings" placeholder="Enter monthly savings" step="0.01" min="0">
+        <button class="calculate-button" onclick="calculateSavings()">Calculate</button>
+        <div class="results" id="results">?</div>
+    </div>
+
+    <script>
+        function calculateSavings() {
+            let goal = parseFloat(document.getElementById("goalAmount").value);
+            let monthly = parseFloat(document.getElementById("monthlySavings").value);
+
+            if (isNaN(goal) || goal <= 0 || isNaN(monthly) || monthly <= 0) {
+                document.getElementById("results").innerHTML = "Enter valid numbers.";
+                return;
+            }
+
+            let months = Math.ceil(goal / monthly);
+            let years = Math.floor(months / 12);
+            let remainingMonths = months % 12;
+
+            let resultText = years > 0 
+                ? `${years} year(s) and ${remainingMonths} month(s)` 
+                : `${remainingMonths} month(s)`;
+
+            document.getElementById("results").innerHTML = `It will take: <b>${resultText}</b>`;
+        }
+    </script>
+</body>
+</html>
