@@ -14,14 +14,15 @@
             align-items: center;
             height: 100vh;
         }
-        .widget-container {
-            background: #2e2e2e;
-            padding: 20px;
-            border-radius: 10px;
-            width: 320px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
+.widget-container {
+    background: transparent !important; /* Fully transparent background */
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+    text-align: center;
+    box-shadow: none; /* Removes any unnecessary shadow */
+    overflow: hidden; /* Prevents scrollbars */
+}
         .header {
             font-size: 14px;
             color: white;
