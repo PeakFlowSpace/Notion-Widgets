@@ -32,12 +32,10 @@
             font-style: italic;
             border-left: 5px solid #9317a8;
             min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            text-align: left;
             white-space: normal;
             line-height: 1.5;
+            word-wrap: break-word;
         }
         .button {
             background: #9317a8;
@@ -61,12 +59,12 @@
 
     <script>
         const tips = [
-            "Think <strong>$5 a day</strong> is nothing? That’s <strong>$150 a month</strong> 💰. Small daily spending adds up fast. Think in <strong>monthly or yearly cost</strong> before buying.",
-            "<strong>Buy Now, Pay Later</strong> is an <strong>ADHD trap</strong> ⚠️. It tricks your brain into thinking it costs <strong>less than it does</strong>—even when you <strong>know better</strong>. Always check the <strong>full price</strong> before clicking.",
-            "<strong>Make saving automatic</strong>, not a decision 💳. Set up a <strong>payday auto-transfer</strong> so you <strong>never 'choose' to save</strong>—it just happens.",
-            "<strong>Cash-stuffing works</strong> for ADHD brains 💵. If you physically <strong>separate money</strong> into labeled envelopes, you’re <strong>less likely to spend impulsively</strong>.",
-            "<strong>Credit cards on your phone</strong> = instant spending 📱. If it’s <strong>out of reach</strong>, you’ll <strong>second-guess unnecessary buys</strong>.",
-            "<strong>Subscriptions silently drain ADHDers</strong> 📅. Review your <strong>bank transactions</strong> and <strong>cancel anything</strong> you forgot you were paying for."
+            "Think <b>$5 a day</b> is nothing? That’s <b>$150 a month</b> 💰. Small daily spending adds up fast. Think in <b>monthly or yearly cost</b> before buying.",
+            "<b>Buy Now, Pay Later</b> is an <b>ADHD trap</b> ⚠️. It tricks your brain into thinking it costs <b>less than it does</b>—even when you <b>know better</b>. Always check the <b>full price</b> before clicking.",
+            "<b>Make saving automatic</b>, not a decision 💳. Set up a <b>payday auto-transfer</b> so you <b>never 'choose' to save</b>—it just happens.",
+            "<b>Cash-stuffing works</b> for ADHD brains 💵. If you physically <b>separate money</b> into labeled envelopes, you’re <b>less likely to spend impulsively</b>.",
+            "<b>Credit cards on your phone</b> = instant spending 📱. If it’s <b>out of reach</b>, you’ll <b>second-guess unnecessary buys</b>.",
+            "<b>Subscriptions silently drain ADHDers</b> 📅. Review your <b>bank transactions</b> and <b>cancel anything</b> you forgot you were paying for."
         ];
         
         let currentTipIndex = 0;
@@ -77,9 +75,8 @@
         }
         
         document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("tip-box").innerHTML = tips[0];
+            nextTip();
         });
     </script>
 </body>
 </html>
-
