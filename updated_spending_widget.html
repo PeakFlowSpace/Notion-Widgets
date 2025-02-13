@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeakFlowSpace™ Cost of Impulse Spending</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #242424;
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 350px;
+            margin: auto;
+            position: relative;
+        }
+        .branding {
+            font-size: 14px;
+            color: white;
+            margin-bottom: 3px;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2e7cd1;
+            margin-bottom: 10px;
+        }
+        .description {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #cccccc;
+        }
+        .input-box {
+            width: 80%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .calculate-button {
+            background-color: #2e7cd1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: block;
+            margin: auto;
+        }
+        .calculate-button:hover {
+            background-color: #255a9b;
+        }
+        .results {
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .results-table th {
+            background-color: #9317a8;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .results-table td {
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+        }
+        .daily-row { background-color: #2e7cd1; }
+        .weekly-row { background-color: #4c8fdc; }
+        .monthly-row { background-color: #72a4e0; }
+        .results-table th:first-child, .results-table td:first-child {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+        .results-table th:last-child, .results-table td:last-child {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="branding">PeakFlowSpace™</div>
+        <h1>Cost of Impulse Spending</h1>
+        <p class="description">Enter the cost of an item to see how much you'd spend if you bought it daily, weekly, or monthly.</p>
+        <input type="number" class="input-box" id="costInput" placeholder="Enter item cost" step="0.01" min="0">
+        <button class="calculate-button" onclick="calculateCost()">Calculate</button>
+        <div class="results">
+            <table class="results-table">
+                <tr>
+                    <th>If Bought...</th>
+                    <th>Annual Cost</th>
+                </tr>
+                <tr class="daily-row">
+                    <td>Daily</td>
+                    <td id="dailyCost">?</td>
+                </tr>
+                <tr class="weekly-row">
+                    <td>Weekly</td>
+                    <td id="weeklyCost">?</td>
+                </tr>
+                <tr class="monthly-row">
+                    <td>Monthly</td>
+                    <td id="monthlyCost">?</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function calculateCost() {
+            let cost = parseFloat(document.getElementById("costInput").value);
+            if (isNaN(cost) || cost <= 0) {
+                document.getElementById("dailyCost").textContent = "?";
+                document.getElementById("weeklyCost").textContent = "?";
+                document.getElementById("monthlyCost").textContent = "?";
+                return;
+            }
+
+            document.getElementById("dailyCost").textContent = (cost * 365).toFixed(2);
+            document.getElementById("weeklyCost").textContent = (cost * 52).toFixed(2);
+            document.getElementById("monthlyCost").textContent = (cost * 12).toFixed(2);
+        }
+    </script>
+</body>
+</html>
