@@ -12,10 +12,10 @@ html, body {
     padding: 0;
     overflow: hidden; /* Prevents unwanted scrollbars */
     background-color: transparent !important; /* Ensures full transparency */
-    font-family: 'Inter', sans-serif; /* Upgraded font */
 }
 
 body {
+    font-family: Arial, sans-serif;
     color: #fff;
     display: flex;
     justify-content: center;
@@ -25,7 +25,7 @@ body {
 
 /* Keeps the grey outer card */
 .widget-container {
-    background: #2e2e2e !important; /* Grey background restored */
+    background: #2e2e2e !important; /* Restores grey background */
     padding: 20px;
     border-radius: 10px;
     width: 320px;
@@ -37,42 +37,39 @@ body {
 
 /* PeakFlowSpace™ (non-bold) */
 .header {
-    font-size: 14px;
+    font-size: 13px; /* Slightly smaller */
     color: white;
-    font-weight: normal; /* Now non-bold */
+    font-weight: normal;
     margin-bottom: 10px;
 }
 
-/* Inner content: Pink left border + darker grey */
+/* Inner tip box with pink border */
 .tip-box {
-    background: #1e1e1e !important; /* Dark grey inside */
+    background: transparent !important; /* Ensures inner area is transparent */
     padding: 15px;
     border-radius: 8px;
-    font-size: 17px; /* Slightly larger for readability */
+    font-size: 15px; /* Slightly smaller text */
     font-style: italic;
     text-align: left;
     white-space: normal;
-    line-height: 1.6;
+    line-height: 1.5;
     word-wrap: break-word;
-    border-left: 5px solid #9317a8; /* Pink edge restored */
+    margin-bottom: 15px; /* Adds space between tip and button */
 }
 
-/* Improve emphasis */
-.tip-box b {
-    font-weight: 600; /* Slightly stronger bold */
+/* Button styling */
+.button {
+    background: #9317a8;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
 }
-        .button {
-            background: #9317a8;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .button:hover {
-            background: #7d5a85;
-        }
+.button:hover {
+    background: #7d5a85;
+}
     </style>
 </head>
 <body>
