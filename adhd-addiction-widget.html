@@ -5,54 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADHD & Addiction</title>
 <style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden; /* Prevents unwanted scrollbars */
-        background-color: transparent !important; /* Ensures full transparency */
-    }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
-    body {
-        font-family: Arial, sans-serif;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevents unwanted scrollbars */
+    background-color: transparent !important; /* Ensures full transparency */
+    font-family: 'Inter', sans-serif; /* Upgraded font */
+}
 
-    /* Keeps the grey outer card */
-    .widget-container {
-        background: #2e2e2e !important; /* Restores grey background */
-        padding: 20px;
-        border-radius: 10px;
-        width: 320px;
-        text-align: center;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Keeps shadow effect */
-        overflow: hidden; /* Prevents scrollbars */
-        position: relative;
-    }
+body {
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
-    /* PeakFlowSpace™ (non-bold) */
-    .header {
-        font-size: 14px;
-        color: white;
-        font-weight: normal; /* Now non-bold */
-        margin-bottom: 10px;
-    }
+/* Keeps the grey outer card */
+.widget-container {
+    background: #2e2e2e !important; /* Grey background restored */
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Keeps shadow effect */
+    overflow: hidden; /* Prevents scrollbars */
+    position: relative;
+}
 
-    /* Inner content remains clean */
-    .tip-box {
-        background: transparent !important; /* Ensures inner area is transparent */
-        padding: 15px;
-        border-radius: 8px;
-        font-size: 16px;
-        font-style: italic;
-        text-align: left;
-        white-space: normal;
-        line-height: 1.5;
-        word-wrap: break-word;
-    }
+/* PeakFlowSpace™ (non-bold) */
+.header {
+    font-size: 14px;
+    color: white;
+    font-weight: normal; /* Now non-bold */
+    margin-bottom: 10px;
+}
+
+/* Inner content: Pink left border + darker grey */
+.tip-box {
+    background: #1e1e1e !important; /* Dark grey inside */
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 17px; /* Slightly larger for readability */
+    font-style: italic;
+    text-align: left;
+    white-space: normal;
+    line-height: 1.6;
+    word-wrap: break-word;
+    border-left: 5px solid #9317a8; /* Pink edge restored */
+}
+
+/* Improve emphasis */
+.tip-box b {
+    font-weight: 600; /* Slightly stronger bold */
+}
         .button {
             background: #9317a8;
             color: white;
