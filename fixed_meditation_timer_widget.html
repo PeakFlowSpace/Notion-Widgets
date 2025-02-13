@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeakFlowSpace™ Meditation Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #242424;
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 350px;
+            margin: auto;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        .branding {
+            font-size: 14px;
+            color: white;
+            margin-bottom: 3px;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2e7cd1;
+            margin-bottom: 10px;
+        }
+        .input-box {
+            width: 80%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .preset-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .preset-button {
+            background-color: #3177C7;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .preset-button:hover {
+            background-color: #255a9b;
+        }
+        .timer-display {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .start-button {
+            background-color: #2e7cd1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .start-button:hover {
+            background-color: #255a9b;
+        }
+        .end-button {
+            background-color: #A83232;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .end-button:hover {
+            background-color: #8B2828;
+        }
+        .session-ended {
+            color: #9317a8;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .confetti {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="branding">PeakFlowSpace™</div>
+        <h1>Meditation Timer</h1>
+        <input type="number" class="input-box" id="meditationTime" placeholder="Enter minutes" min="1">
+        <div class="preset-buttons">
+            <button class="preset-button" onclick="setTime(5)">5 min</button>
+            <button class="preset-button" onclick="setTime(10)">10 min</button>
+            <button class="preset-button" onclick="setTime(15)">15 min</button>
+            <button class="preset-button" onclick="setTime(20)">20 min</button>
+        </div>
+        <div class="timer-display" id="timer">00:00</div>
+        <button class="start-button" onclick="startTimer()">Start</button>
+        <button class="end-button" onclick="endTimer()">End Session</button>
+        <div class="session-ended" id="sessionEndedMessage" style="display: none;"></div>
+        <canvas class="confetti" id="confettiCanvas"></canvas>
+    </div>
+
+    <script>
+        let timer;
+        let totalTime = 0;
+        let remainingTime = 0;
+        let elapsedTime = 0;
+        let isRunning = false;
+
+        function setTime(minutes) {
+            document.getElementById("meditationTime").value = minutes;
+        }
+
+        function startTimer() {
+            let input = document.getElementById("meditationTime");
+            totalTime = parseInt(input.value) || 0;
+            if (totalTime <= 0) return;
+            
+            remainingTime = totalTime * 60;
+            elapsedTime = 0;
+            isRunning = true;
+            updateDisplay();
+            clearInterval(timer);
+            timer = setInterval(countdown, 1000);
+        }
+
+        function countdown() {
+            if (remainingTime <= 0) {
+                clearInterval(timer);
+                triggerConfetti();
+                document.getElementById("timer").innerHTML = "Great job!";
+                document.getElementById("sessionEndedMessage").innerHTML = `Well done! You meditated for ${Math.floor(elapsedTime / 60)} minutes and ${elapsedTime % 60} seconds.`;
+                document.getElementById("sessionEndedMessage").style.display = "block";
+                isRunning = false;
+                return;
+            }
+            remainingTime--;
+            elapsedTime++;
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            let minutes = Math.floor(remainingTime / 60);
+            let seconds = remainingTime % 60;
+            document.getElementById("timer").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        function endTimer() {
+            if (!isRunning) return;
+            clearInterval(timer);
+            document.getElementById("timer").innerHTML = "Session Ended";
+            document.getElementById("sessionEndedMessage").innerHTML = `Well done! You meditated for ${Math.floor(elapsedTime / 60)} minutes and ${elapsedTime % 60} seconds.`;
+            document.getElementById("sessionEndedMessage").style.display = "block";
+            isRunning = false;
+        }
+
+        function triggerConfetti() {
+            let canvas = document.getElementById("confettiCanvas");
+            let confettiCtx = canvas.getContext("2d");
+            canvas.style.display = "block";
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let confettiParticles = [];
+            for (let i = 0; i < 100; i++) {
+                confettiParticles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 4 + 1,
+                    d: Math.random() * 4,
+                    color: `hsl(${Math.random() * 360}, 100%, 50%)`
+                });
+            }
+
+            function drawConfetti() {
+                confettiCtx.clearRect(0, 0, canvas.width, canvas.height);
+                confettiParticles.forEach(p => {
+                    confettiCtx.beginPath();
+                    confettiCtx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
+                    confettiCtx.fillStyle = p.color;
+                    confettiCtx.fill();
+                });
+            }
+
+            function updateConfetti() {
+                confettiParticles.forEach(p => {
+                    p.y += p.d;
+                    if (p.y > canvas.height) {
+                        p.y = 0;
+                        p.x = Math.random() * canvas.width;
+                    }
+                });
+            }
+
+            function animateConfetti() {
+                drawConfetti();
+                updateConfetti();
+                setTimeout(() => { canvas.style.display = "none"; }, 2000);
+            }
+
+            setInterval(animateConfetti, 30);
+        }
+    </script>
+</body>
+</html>
