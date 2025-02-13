@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADHD Tip Widget</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #191919;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .widget-container {
+            background: #2e2e2e;
+            padding: 20px;
+            border-radius: 10px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .tip-box {
+            background: #1e1e1e;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-style: italic;
+            border-left: 5px solid #9317a8;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            white-space: normal;
+            line-height: 1.5;
+        }
+        .button {
+            background: #9317a8;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .button:hover {
+            background: #7d5a85;
+        }
+    </style>
+</head>
+<body>
+    <div class="widget-container">
+        <div class="tip-box" id="tip-box">Loading...</div>
+        <button class="button" onclick="nextTip()">New Tip</button>
+    </div>
+
+    <script>
+        const tips = [
+            "Think <strong>$5 a day</strong> is nothing? That’s <strong>$150 a month</strong> 💰. Small daily spending adds up fast. Think in <strong>monthly or yearly cost</strong> before buying.",
+            "<strong>Buy Now, Pay Later</strong> is an <strong>ADHD trap</strong> ⚠️. It tricks your brain into thinking it costs <strong>less than it does</strong>—even when you <strong>know better</strong>. Always check the <strong>full price</strong> before clicking.",
+            "<strong>Make saving automatic</strong>, not a decision 💳. Set up a <strong>payday auto-transfer</strong> so you <strong>never 'choose' to save</strong>—it just happens.",
+            "<strong>Cash-stuffing works</strong> for ADHD brains 💵. If you physically <strong>separate money</strong> into labeled envelopes, you’re <strong>less likely to spend impulsively</strong>.",
+            "<strong>Credit cards on your phone</strong> = instant spending 📱. If it’s <strong>out of reach</strong>, you’ll <strong>second-guess unnecessary buys</strong>.",
+            "<strong>Subscriptions silently drain ADHDers</strong> 📅. Review your <strong>bank transactions</strong> and <strong>cancel anything</strong> you forgot you were paying for."
+        ];
+        
+        let currentTipIndex = 0;
+        
+        function nextTip() {
+            document.getElementById("tip-box").innerHTML = tips[currentTipIndex];
+            currentTipIndex = (currentTipIndex + 1) % tips.length;
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("tip-box").innerHTML = tips[0];
+        });
+    </script>
+</body>
+</html>
+
