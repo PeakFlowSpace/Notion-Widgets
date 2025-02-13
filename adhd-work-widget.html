@@ -4,57 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADHD & Work</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #191919;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .widget-container {
-            background: #2e2e2e;
-            padding: 20px;
-            border-radius: 10px;
-            width: 320px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        .header {
-            font-size: 14px;
-            color: white;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .tip-box {
-            background: #1e1e1e;
-            color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 16px;
-            font-style: italic;
-            border-left: 5px solid #9317a8;
-            min-height: 50px;
-            text-align: left;
-            white-space: normal;
-            line-height: 1.5;
-            word-wrap: break-word;
-        }
-        .button {
-            background: #9317a8;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .button:hover {
-            background: #7d5a85;
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevents unwanted scrollbars */
+    background-color: transparent !important; /* Ensures full transparency */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Keeps the grey outer card */
+.widget-container {
+    background: #2e2e2e !important; /* Restores grey background */
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Keeps shadow effect */
+    overflow: hidden; /* Prevents scrollbars */
+    position: relative;
+}
+
+/* PeakFlowSpace™ (non-bold) */
+.header {
+    font-size: 13px; /* Slightly smaller */
+    color: white;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+/* Inner tip box with pink border */
+.tip-box {
+    background: transparent !important; /* Ensures inner area is transparent */
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 15px; /* Slightly smaller text */
+    font-style: italic;
+    text-align: left;
+    white-space: normal;
+    line-height: 1.5;
+    word-wrap: break-word;
+    margin-bottom: 15px; /* Adds space between tip and button */
+}
+
+/* Button styling */
+.button {
+    background: #9317a8;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.button:hover {
+    background: #7d5a85;
+}
     </style>
 </head>
 <body>
