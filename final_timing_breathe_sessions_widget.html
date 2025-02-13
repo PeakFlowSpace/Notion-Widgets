@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeakFlowSpace™ Breathe Sessions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #242424;
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 350px;
+            margin: auto;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        .branding {
+            font-size: 14px;
+            color: white;
+            margin-bottom: 3px;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2e7cd1;
+            margin-bottom: 10px;
+        }
+        .mode-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .mode-button {
+            background-color: #3177C7;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .mode-button:hover {
+            background-color: #255a9b;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .input-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            width: 80%;
+        }
+        .input-label {
+            font-size: 14px;
+            color: white;
+            text-align: center;
+            width: 60px;
+        }
+        .input-box {
+            width: 50px;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .breathing-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(147,23,168,1) 10%, rgba(147,23,168,0.2) 80%);
+            margin: 20px auto;
+            position: relative;
+            transition: transform linear;
+        }
+        .timer-display {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .start-button, .stop-button {
+            background-color: #2e7cd1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 5px;
+        }
+        .stop-button {
+            background-color: #A83232;
+        }
+        .start-button:hover {
+            background-color: #255a9b;
+        }
+        .stop-button:hover {
+            background-color: #8B2828;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="branding">PeakFlowSpace™</div>
+        <h1>Breathe Sessions</h1>
+        <div class="mode-buttons">
+            <button class="mode-button" onclick="setMode(4, 4, 4, 4)">Box</button>
+            <button class="mode-button" onclick="setMode(5, 0, 5, 0)">5-5</button>
+            <button class="mode-button" onclick="setMode(4, 7, 8, 0)">4-7-8</button>
+        </div>
+        <div class="input-group">
+            <div class="input-row">
+                <label class="input-label">Inhale</label>
+                <input type="number" class="input-box" id="inhaleTime" value="4">
+                <label class="input-label">Pause</label>
+                <input type="number" class="input-box" id="holdTime" value="0">
+            </div>
+            <div class="input-row">
+                <label class="input-label">Exhale</label>
+                <input type="number" class="input-box" id="exhaleTime" value="6">
+                <label class="input-label">Pause</label>
+                <input type="number" class="input-box" id="holdTime2" value="0">
+            </div>
+        </div>
+        <div class="breathing-circle"></div>
+        <div class="timer-display" id="breathTimer">0:00</div>
+        <button class="start-button" onclick="startBreathing()">Start</button>
+        <button class="stop-button" onclick="stopBreathing()">Stop</button>
+    </div>
+
+    <script>
+        let breathTimer;
+        let elapsedSeconds = 0;
+        let breathing = false;
+        let inhale, hold, exhale, hold2;
+        let circle = document.querySelector(".breathing-circle");
+
+        function setMode(inh, hld, exh, hld2) {
+            document.getElementById("inhaleTime").value = inh;
+            document.getElementById("holdTime").value = hld;
+            document.getElementById("exhaleTime").value = exh;
+            document.getElementById("holdTime2").value = hld2;
+        }
+
+        function startBreathing() {
+            if (breathing) return;
+            breathing = true;
+            elapsedSeconds = 0;
+            updateBreathTimer();
+            breathTimer = setInterval(() => {
+                elapsedSeconds++;
+                updateBreathTimer();
+            }, 1000);
+            runBreathingCycle();
+        }
+
+        function updateBreathTimer() {
+            let minutes = Math.floor(elapsedSeconds / 60);
+            let seconds = elapsedSeconds % 60;
+            document.getElementById("breathTimer").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        function runBreathingCycle() {
+            inhale = parseInt(document.getElementById("inhaleTime").value) * 1000;
+            hold = parseInt(document.getElementById("holdTime").value) * 1000;
+            exhale = parseInt(document.getElementById("exhaleTime").value) * 1000;
+            hold2 = parseInt(document.getElementById("holdTime2").value) * 1000;
+
+            if (!breathing) return;
+            circle.style.transform = "scale(0.5)"; // Start small
+
+            setTimeout(() => {
+                if (!breathing) return;
+                circle.style.transition = `transform ${inhale}ms linear`;
+                circle.style.transform = "scale(1.6)"; // Expand during inhale
+                setTimeout(() => {
+                    if (!breathing) return;
+                    setTimeout(() => {
+                        if (!breathing) return;
+                        circle.style.transition = `transform ${exhale}ms linear`;
+                        circle.style.transform = "scale(0.5)"; // Shrink during exhale
+                        setTimeout(() => {
+                            if (!breathing) return;
+                            setTimeout(() => {
+                                runBreathingCycle();
+                            }, hold2);
+                        }, exhale);
+                    }, hold);
+                }, inhale);
+            }, 100);
+        }
+
+        function stopBreathing() {
+            clearInterval(breathTimer);
+            breathing = false;
+            circle.style.transition = "transform 500ms linear";
+            circle.style.transform = "scale(0.5)"; // Reset to small
+            document.getElementById("breathTimer").innerHTML = `You breathed for ${Math.floor(elapsedSeconds / 60)} min ${elapsedSeconds % 60} sec`;
+        }
+    </script>
+</body>
+</html>
