@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeakFlowSpace™ Memory Game</title>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: transparent; /* Important for Notion */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+
+        .game-container {
+            background: #2E2E2E;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            width: 350px; /* Adjust as needed */
+        }
+
+        .header {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+        }
+
+        .sub-header {
+            font-size: 22px;
+            color: #3177C7; /* Brand Blue */
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns */
+            grid-template-rows: repeat(4, 1fr);    /* 4 rows */
+            gap: 10px;
+            width: 100%;
+            height: 300px; /* Adjust as needed */
+            perspective: 1000px; /* For 3D flip effect */
+        }
+
+        .card {
+            position: relative; /* For absolute positioning of front/back */
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            transition: transform 0.6s; /* Smooth flip transition */
+            transform-style: preserve-3d; /* For 3D flip effect */
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px; /* Adjust as needed */
+            border-radius: 5px;
+            backface-visibility: hidden; /* Hide back of card during flip */
+            -webkit-backface-visibility: hidden;
+        }
+
+        .card-front {
+            background-color: #444;
+            color: #444; /* Hide emoji initially */
+             /*Semi-tranparent brand pink*/
+            border: 3px solid rgba(147, 23, 168, 0.6);
+        }
+
+        .card-back {
+            background-color: #3177C7; /* Brand Blue */
+            color: white;
+            transform: rotateY(180deg); /* Initially flipped */
+        }
+        .reset-btn {
+            background-color: #9A2A2A; /*Brand Pink*/
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+         }
+
+        .reset-btn:hover{
+            opacity: 0.8;
+        }
+
+        #winner-message {
+          margin-top: 1rem;
+          font-size: 1.5rem;
+          color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">PeakFlowSpace™</div>
+        <div class="sub-header">Memory Game</div>
+        <div class="grid" id="grid">
+            </div>
+        <button class="reset-btn" id="reset">Reset</button>
+        <div id="winner-message"></div>
+    </div>
+
+    <script>
+     document.addEventListener('DOMContentLoaded', () => {
+        const grid = document.getElementById('grid');
+        const resetButton = document.getElementById('reset');
+        const winnerMessage = document.getElementById("winner-message");
+        const emojis = ['🔥', '🔥', '🍕', '🍕', '🧠', '🧠', '🎯', '🎯', '🎵', '🎵', '🏆', '🏆', '⭐', '⭐', '🚀', '🚀'];
+        let cards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+
+       //+ Jonas Raoni Soares Silva
+        //@ http://jsfromhell.com/array/shuffle [v1.0]
+        function shuffle(o){ //v1.0
+            for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+            return o;
+        };
+
+        function createBoard() {
+            shuffle(emojis);
+            grid.innerHTML = ''; // Clear previous grid
+            matchedPairs = 0; //Reset
+            winnerMessage.textContent = ""; //reset win message.
+            cards = [];
+            flippedCards = [];
+
+            for (let i = 0; i < emojis.length; i++) {
+                const card = document.createElement('div');
+                card.classList.add('card');
+
+                const front = document.createElement('div');
+                front.classList.add('card-front');
+
+                const back = document.createElement('div');
+                back.classList.add('card-back');
+                back.textContent = emojis[i];
+
+                card.appendChild(front);
+                card.appendChild(back);
+                grid.appendChild(card);
+                cards.push(card);
+
+                card.addEventListener('click', flipCard);
+            }
+        }
+
+        function flipCard() {
+            if (flippedCards.length < 2 && !this.classList.contains('flipped') && !this.classList.contains('matched')) {
+                this.classList.add('flipped');
+                flippedCards.push(this);
+
+                if (flippedCards.length === 2) {
+                    setTimeout(checkMatch, 750); // Wait a bit to check
+                }
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            const emoji1 = card1.querySelector('.card-back').textContent;
+            const emoji2 = card2.querySelector('.card-back').textContent;
+
+            if (emoji1 === emoji2) {
+                // Match!
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                flippedCards = [];
+
+                if (matchedPairs === emojis.length / 2) {
+                    winnerMessage.textContent = "Well Done!"; // Display winner message
+                }
+            } else {
+                // No match - flip back after a delay
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+
+        resetButton.addEventListener('click', createBoard);
+        createBoard(); // Initial board creation
+    });
+
+    </script>
+</body>
+</html>
