@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeakFlowSpace™ Decision Spinner</title>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: transparent;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+        .spinner-container {
+            background: #2E2E2E;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            width: 320px;
+            position: relative;
+        }
+        .header { font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-bottom: 10px; }
+        .sub-header { font-size: 18px; color: #3177C7; font-weight: bold; margin-bottom: 10px; }
+        .wheel-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        #wheelCanvas {
+            width: 150px;
+            height: 150px;
+            border: 2px solid #444;
+            border-radius: 50%;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .button-container { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
+        .spin-button, .reset-button { padding: 8px; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; }
+        .spin-button { background: #3177C7; }
+        .reset-button { background: #A52A2A; }
+
+        /* Input container and labels */
+        .input-container { margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+        .input-label { display: flex; align-items: center; justify-content: space-between; font-size: 14px;  border-radius: 5px; padding: 5px;}
+        .input-label input { background: white; color: black;  }
+        input { width: 100%; padding: 6px; margin: 3px 0; border-radius: 5px; text-align: center; border: 2px solid; }
+        input::placeholder { color: #777; }
+
+        /* Pointer styles */
+        .pointer {
+            position: absolute;
+            top: 1px; /* Fine-tuned alignment */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 14px solid #bbb; /* Slightly taller */
+            z-index: 15;
+        }
+
+
+        /* Color-coded input borders and label text */
+        .input-label:nth-child(1) { color: #9118A8; }
+        .input-label:nth-child(1) input { border-color: #9118A8; }
+        .input-label:nth-child(2) { color: #48851D; }
+        .input-label:nth-child(2) input { border-color: #48851D; }
+        .input-label:nth-child(3) { color: #3177C7; }
+        .input-label:nth-child(3) input { border-color: #3177C7; }
+        .input-label:nth-child(4) { color: #F7B900; }
+        .input-label:nth-child(4) input { border-color: #F7B900; }
+
+        /* Numbered input labels */
+        .input-container .input-label:nth-child(1)::before { content: "1:"; margin-right: 5px; font-weight: bold; font-size: 18px; }
+        .input-container .input-label:nth-child(2)::before { content: "2:"; margin-right: 5px; font-weight: bold; font-size: 18px; }
+        .input-container .input-label:nth-child(3)::before { content: "3:"; margin-right: 5px; font-weight: bold; font-size: 18px; }
+        .input-container .input-label:nth-child(4)::before { content: "4:"; margin-right: 5px; font-weight: bold; font-size: 18px; }
+
+        /* Winner Display Styles */
+        #winner-display {
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="spinner-container">
+        <div class="header">PeakFlowSpace™</div>
+        <div class="sub-header">Decision Spinner</div>
+        <div class="wheel-container">
+            <div class="pointer"></div>
+            <canvas id="wheelCanvas"></canvas>
+            </div>
+        <div class="button-container">
+            <button class="spin-button" id="spin">Spin</button>
+            <button class="reset-button" id="reset">Reset</button>
+        </div>
+        <div class="input-container">
+            <div class="input-label"><input type="text" id="option1" placeholder="Option 1"></div>
+            <div class="input-label"><input type="text" id="option2" placeholder="Option 2"></div>
+            <div class="input-label"><input type="text" id="option3" placeholder="Option 3"></div>
+            <div class="input-label"><input type="text" id="option4" placeholder="Option 4"></div>
+        </div>
+        <div id="winner-display"></div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('wheelCanvas');
+        const ctx = canvas.getContext('2d');
+        const spinButton = document.getElementById('spin');
+        const resetButton = document.getElementById('reset');
+        const winnerDisplay = document.getElementById('winner-display');
+        const inputs = [
+            document.getElementById('option1'),
+            document.getElementById('option2'),
+            document.getElementById('option3'),
+            document.getElementById('option4'),
+        ];
+
+        canvas.width = 150;
+        canvas.height = 150;
+
+        let rotation = 0; // in degrees
+        let spinning = false;
+        const colors = ['#9118A8', '#48851D', '#3177C7', '#F7B900'];
+
+        function drawWheel() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const numSegments = inputs.length;
+            const angle = 2 * Math.PI / numSegments;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = canvas.width / 2;
+
+            for (let i = 0; i < numSegments; i++) {
+                const startAngle = i * angle + (rotation * Math.PI / 180);
+                const endAngle = (i + 1) * angle + (rotation * Math.PI / 180);
+                const color = colors[i % colors.length];
+
+                // Draw Inner Shadow
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius - 2, startAngle, endAngle);
+                ctx.lineTo(centerX, centerY);
+                ctx.fillStyle = shadeColor(color, -20);
+                ctx.fill();
+                ctx.closePath();
+
+                // Draw Main Segment
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                ctx.lineTo(centerX, centerY);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.closePath();
+            }
+
+            // --- Dividing Lines (Black) - DRAWN *AFTER* SEGMENTS ---
+            for (let i = 0; i < numSegments; i++) {
+                const startAngle = i * angle + (rotation * Math.PI / 180);
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(centerX + radius * Math.cos(startAngle), centerY + radius * Math.sin(startAngle));
+                ctx.strokeStyle = 'black';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                ctx.closePath();
+            }
+        }
+
+
+        function spinWheel() {
+            if (spinning) return;
+            spinning = true;
+            winnerDisplay.textContent = ''; // Clear previous winner
+
+            const spinDegrees = 360 * 5 + Math.random() * 360;
+
+            let currentRotation = 0;
+            const startTime = performance.now();
+
+            function animate(currentTime) {
+                const elapsedTime = currentTime - startTime;
+                if (elapsedTime < 3000) {
+                    currentRotation = easeOutCubic(elapsedTime, 0, spinDegrees, 3000);
+                    rotation = currentRotation;
+                    drawWheel();
+                    requestAnimationFrame(animate);
+                } else {
+                    rotation = spinDegrees % 360;
+                    drawWheel();
+                    spinning = false;
+                    displayWinner(); // Call displayWinner after spin
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function easeOutCubic(t, b, c, d) {
+            t /= d;
+            t--;
+            return c*(t*t*t + 1) + b;
+        }
+
+        function resetWheel() {
+            rotation = 0;
+            drawWheel();
+            winnerDisplay.textContent = ''; // Clear winner on reset
+        }
+
+        // Function to determine and display the winner
+        function displayWinner() {
+            const numSegments = inputs.length;
+            let angle = rotation % 360; // Final rotation in degrees (0-360)
+            angle = (angle + 90) % 360;  // Adjust angle for 12 o'clock start
+            let winningIndex = Math.floor(angle / (360 / numSegments));
+            winningIndex = (numSegments - winningIndex) % numSegments; // Correct index
+
+            // Get winner text, default to "Spin Again" if empty
+            const winner = inputs[winningIndex].value.trim() !== '' ? inputs[winningIndex].value : "Spin Again";
+            winnerDisplay.textContent = winner; // Simplified display
+        }
+
+        drawWheel();
+
+        spinButton.addEventListener('click', spinWheel);
+        resetButton.addEventListener('click', resetWheel);
+
+    });
+
+    // Helper function to darken a hex color
+    function shadeColor(color, percent) {
+        const num = parseInt(color.slice(1), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = (num >> 16) + amt;
+        const G = (num >> 8 & 0x00FF) + amt;
+        const B = (num & 0x0000FF) + amt;
+        return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255)).toString(16).slice(1);
+    }
+    </script>
+</body>
+</html>
