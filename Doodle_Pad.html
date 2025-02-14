@@ -41,6 +41,7 @@
             width: 420px;
             height: 350px;
             cursor: crosshair;
+            touch-action: none; /* Prevent default touch behavior */
         }
         .buttons {
             margin-top: 15px;
@@ -70,10 +71,18 @@
         const ctx = canvas.getContext("2d");
         let drawing = false;
 
+        // --- Mouse Events (Keep these for desktop) ---
         canvas.addEventListener("mousedown", startDrawing);
         canvas.addEventListener("mousemove", draw);
         canvas.addEventListener("mouseup", stopDrawing);
         canvas.addEventListener("mouseout", stopDrawing);
+
+        // --- Touch Events (Add these for touch devices) ---
+        canvas.addEventListener("touchstart", startDrawingTouch);
+        canvas.addEventListener("touchmove", drawTouch);
+        canvas.addEventListener("touchend", stopDrawingTouch);
+        canvas.addEventListener("touchcancel", stopDrawingTouch); // Handle touch cancel
+
 
         function startDrawing(event) {
             drawing = true;
@@ -92,6 +101,39 @@
         function stopDrawing() {
             drawing = false;
             ctx.closePath();
+        }
+      
+        // --- Touch Event Handlers ---
+
+        function startDrawingTouch(event) {
+            event.preventDefault(); // Prevent scrolling/zooming
+            drawing = true;
+            const touch = event.touches[0]; // Get the first touch point
+            const rect = canvas.getBoundingClientRect(); // Get canvas position
+            const x = touch.clientX - rect.left; // Calculate x-coordinate relative to canvas
+            const y = touch.clientY - rect.top;  // Calculate y-coordinate relative to canvas
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function drawTouch(event) {
+            event.preventDefault();
+            if (!drawing) return;
+            const touch = event.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = "#3177C7";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+
+        function stopDrawingTouch(event) {
+            event.preventDefault(); // Prevent other actions.
+            drawing = false;
+            ctx.closePath(); // Finish the current path
         }
 
         document.getElementById("clear").addEventListener("click", () => {
