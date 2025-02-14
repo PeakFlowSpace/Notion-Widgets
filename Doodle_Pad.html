@@ -20,7 +20,9 @@
             padding: 15px;
             border-radius: 10px;
             text-align: center;
-            width: 450px;
+            width: 95%;        /* Use a percentage of the parent's width */
+            max-width: 420px; /* But don't exceed 420px */
+            position: relative;
         }
         .header {
             font-size: 14px;
@@ -38,10 +40,10 @@
             background: #444;
             border-radius: 5px;
             border: 3px solid #9317A8;
-            width: 420px;
-            height: 350px;
+            width: 100%;       /* Full width of the container */
+            height: auto;     /* Maintain aspect ratio */
             cursor: crosshair;
-            touch-action: none; /* Prevent default touch behavior */
+            touch-action: none;
         }
         .buttons {
             margin-top: 15px;
@@ -61,7 +63,7 @@
     <div class="doodle-container">
         <div class="header">PeakFlowSpace™</div>
         <div class="sub-header">Doodle Pad</div>
-        <canvas id="doodleCanvas" width="420" height="350"></canvas>
+        <canvas id="doodleCanvas"></canvas>
         <div class="buttons">
             <button class="clear-btn" id="clear">Clear</button>
         </div>
@@ -102,7 +104,7 @@
             drawing = false;
             ctx.closePath();
         }
-      
+
         // --- Touch Event Handlers ---
 
         function startDrawingTouch(event) {
@@ -135,6 +137,20 @@
             drawing = false;
             ctx.closePath(); // Finish the current path
         }
+
+
+          // --- Canvas Size ---
+          function resizeCanvas() {
+            const containerWidth = document.querySelector('.doodle-container').offsetWidth;
+            canvas.width = containerWidth;
+            canvas.height = containerWidth * (350/420);
+            // Original aspect ratio maintained (was 420/350).
+        }
+
+        // Initial size and resize on window changes:
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
 
         document.getElementById("clear").addEventListener("click", () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
