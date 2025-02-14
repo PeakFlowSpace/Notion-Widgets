@@ -34,6 +34,10 @@
             color: #2e7cd1;
             margin-bottom: 10px;
         }
+        /* Style for the "Dopamine Hacks" heading */
+        h1.pink-heading {
+            color: #9317A8; /* PeakFlowSpace pink */
+        }
         .tip-box {
             background: rgba(46, 124, 209, 0.15); /* Dark-muted blue */
             color: #3177C7;
@@ -50,11 +54,13 @@
             border-radius: 8px;
             font-size: 16px;
         }
+        /* White text for the tip and hack content */
         .tip-text, .hack-text {
             font-size: 15px;
             font-style: italic;
             display: block;
             padding: 8px;
+            color: white; /* Set text color to white */
         }
         .refresh-button {
             background-color: #2e7cd1;
@@ -86,7 +92,7 @@
             <span class="tip-text" id="focusTip">"The 5-Second Rule ⏳ – Count down from 5 and take action before you can overthink."</span>
             <button class="refresh-button" onclick="generateFocusTip()">🎲 New Tip</button>
         </div>
-        <h1>Dopamine Hacks</h1>
+        <h1 class="pink-heading">Dopamine Hacks</h1>
         <div class="hack-box">
             <span class="hack-text" id="dopamineHack">"Move Your Body 💃 – Dance, stretch, or do 10 jumping jacks for an instant boost."</span>
             <button class="refresh-button pink" onclick="generateDopamineHack()">🎲 New Hack</button>
@@ -106,7 +112,7 @@
             "Parkinson’s Law ⚡ – Set fake deadlines to complete tasks faster.",
             "First 2 Minutes Rule ✅ – If a task takes less than 2 minutes, do it immediately."
         ];
-        
+
         const dopamineHacks = [
             "Move Your Body 💃 – Dance, stretch, or do 10 jumping jacks for an instant boost.",
             "Drink Cold Water ❄️ – Hydration + cold shock = instant dopamine boost.",
