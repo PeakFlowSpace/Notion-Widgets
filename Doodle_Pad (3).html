@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeakFlowSpace™ Doodle Pad</title>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: transparent;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+        .doodle-container {
+            background: #2E2E2E;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            width: 450px;
+        }
+        .header {
+            font-size: 14px;
+            color: white;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        .sub-header {
+            font-size: 22px;
+            color: #3177C7;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        canvas {
+            background: #444;
+            border-radius: 5px;
+            border: 3px solid #9317A8;
+            width: 420px;
+            height: 350px;
+            cursor: crosshair;
+        }
+        .buttons {
+            margin-top: 15px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .clear-btn { background: #C73737; color: white; }
+    </style>
+</head>
+<body>
+    <div class="doodle-container">
+        <div class="header">PeakFlowSpace™</div>
+        <div class="sub-header">Doodle Pad</div>
+        <canvas id="doodleCanvas" width="420" height="350"></canvas>
+        <div class="buttons">
+            <button class="clear-btn" id="clear">Clear</button>
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById("doodleCanvas");
+        const ctx = canvas.getContext("2d");
+        let drawing = false;
+
+        canvas.addEventListener("mousedown", startDrawing);
+        canvas.addEventListener("mousemove", draw);
+        canvas.addEventListener("mouseup", stopDrawing);
+        canvas.addEventListener("mouseout", stopDrawing);
+
+        function startDrawing(event) {
+            drawing = true;
+            ctx.beginPath();
+            ctx.moveTo(event.offsetX, event.offsetY);
+        }
+
+        function draw(event) {
+            if (!drawing) return;
+            ctx.lineTo(event.offsetX, event.offsetY);
+            ctx.strokeStyle = "#3177C7";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        function stopDrawing() {
+            drawing = false;
+            ctx.closePath();
+        }
+
+        document.getElementById("clear").addEventListener("click", () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+    </script>
+</body>
+</html>
