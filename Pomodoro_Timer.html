@@ -32,8 +32,7 @@
             font-size: 48px;
             font-weight: bold;
             margin: 10px 0;
-          	/* Center the timer text horizontally */
-          	text-align: center;
+          	text-align: center; /* Center the timer text */
         }
         .session-info {
             font-size: 16px;
@@ -45,6 +44,7 @@
             font-size: 32px;
             font-weight: bold;
             margin-bottom: 10px;
+            color: white;
         }
 
         .progress-bar {
@@ -150,7 +150,7 @@
         const sessionTypeDisplay = document.getElementById("session-type");
 
         function startTimer() {
-          // Get values from input fields
+          // Get values from input fields, *every* time the timer starts
           focusTime = parseInt(document.getElementById("focusTime").value) * 60;
           shortBreak = parseInt(document.getElementById("shortBreak").value) * 60;
           longBreak = parseInt(document.getElementById("longBreak").value) * 60;
@@ -159,7 +159,7 @@
               isRunning = true;
               timer = setInterval(updateTimer, 1000);  // Update every second
           }
-          // Save the start time whenever the timer starts/resumes
+          // Save state whenever the timer starts/resumes
             localStorage.setItem("pomodoroStartTime", Date.now());
             localStorage.setItem("pomodoroTimeLeft", remainingTime);
             localStorage.setItem("pomodoroSessionType", sessionType);
@@ -211,7 +211,7 @@
 
             sessionInfo.innerText = `Set ${cycles % 4 + 1}/4`;
             sessionTypeDisplay.innerText = sessionType === 'focus' ? 'Focus' : 'Break';
-            // Correctly set the color of the session type
+            //  set the color of the session type
             sessionTypeDisplay.style.color = sessionType === 'focus' ? '#9317A8' : '#3177C7';
 
             // Save Data
@@ -274,8 +274,9 @@
                 updateDisplay();
                 updateProgress(); // Initial progress update
 
-                 if (isRunning && remainingTime > 0) {
-                    startTimer();
+                // *** KEY CHANGE: Only start if running AND time left ***
+                if (isRunning && remainingTime > 0) {
+                    startTimer(); // Resume the timer
                 }
             }
             else {
