@@ -62,14 +62,14 @@
         /* Pointer styles */
         .pointer {
             position: absolute;
-            top: 1px; /* Fine-tuned alignment */
+            top: 1px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
             border-left: 8px solid transparent;
             border-right: 8px solid transparent;
-            border-top: 14px solid #bbb; /* Slightly taller */
+            border-top: 14px solid #bbb;
             z-index: 15;
         }
 
@@ -89,17 +89,6 @@
         .input-container .input-label:nth-child(2)::before { content: "2:"; margin-right: 5px; font-weight: bold; font-size: 18px; }
         .input-container .input-label:nth-child(3)::before { content: "3:"; margin-right: 5px; font-weight: bold; font-size: 18px; }
         .input-container .input-label:nth-child(4)::before { content: "4:"; margin-right: 5px; font-weight: bold; font-size: 18px; }
-
-        /* Winner Display Styles */
-        #winner-display {
-            margin-top: 15px;
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 5px;
-        }
 
     </style>
 </head>
@@ -121,7 +110,6 @@
             <div class="input-label"><input type="text" id="option3" placeholder="Option 3"></div>
             <div class="input-label"><input type="text" id="option4" placeholder="Option 4"></div>
         </div>
-        <div id="winner-display"></div>
     </div>
 
     <script>
@@ -130,7 +118,6 @@
         const ctx = canvas.getContext('2d');
         const spinButton = document.getElementById('spin');
         const resetButton = document.getElementById('reset');
-        const winnerDisplay = document.getElementById('winner-display');
         const inputs = [
             document.getElementById('option1'),
             document.getElementById('option2'),
@@ -145,7 +132,7 @@
         let spinning = false;
         const colors = ['#9118A8', '#48851D', '#3177C7', '#F7B900'];
 
-        function drawWheel() {
+         function drawWheel() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const numSegments = inputs.length;
             const angle = 2 * Math.PI / numSegments;
@@ -175,11 +162,8 @@
                 ctx.fillStyle = color;
                 ctx.fill();
                 ctx.closePath();
-            }
 
-            // --- Dividing Lines (Black) - DRAWN *AFTER* SEGMENTS ---
-            for (let i = 0; i < numSegments; i++) {
-                const startAngle = i * angle + (rotation * Math.PI / 180);
+                // --- Dividing Lines (Black) ---
                 ctx.beginPath();
                 ctx.moveTo(centerX, centerY);
                 ctx.lineTo(centerX + radius * Math.cos(startAngle), centerY + radius * Math.sin(startAngle));
@@ -194,7 +178,6 @@
         function spinWheel() {
             if (spinning) return;
             spinning = true;
-            winnerDisplay.textContent = ''; // Clear previous winner
 
             const spinDegrees = 360 * 5 + Math.random() * 360;
 
@@ -212,7 +195,6 @@
                     rotation = spinDegrees % 360;
                     drawWheel();
                     spinning = false;
-                    displayWinner(); // Call displayWinner after spin
                 }
             }
             requestAnimationFrame(animate);
@@ -227,21 +209,8 @@
         function resetWheel() {
             rotation = 0;
             drawWheel();
-            winnerDisplay.textContent = ''; // Clear winner on reset
         }
 
-        // Function to determine and display the winner
-        function displayWinner() {
-            const numSegments = inputs.length;
-            let angle = rotation % 360; // Final rotation in degrees (0-360)
-            angle = (angle + 90) % 360;  // Adjust angle for 12 o'clock start
-            let winningIndex = Math.floor(angle / (360 / numSegments));
-            winningIndex = (numSegments - winningIndex) % numSegments; // Correct index
-
-            // Get winner text, default to "Spin Again" if empty
-            const winner = inputs[winningIndex].value.trim() !== '' ? inputs[winningIndex].value : "Spin Again";
-            winnerDisplay.textContent = winner; // Simplified display
-        }
 
         drawWheel();
 
