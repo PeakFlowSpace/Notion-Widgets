@@ -26,22 +26,27 @@
             font-size: 14px;
             color: white;
             opacity: 0.8;
+            margin-bottom: 10px;
         }
         .time {
             font-size: 48px;
             font-weight: bold;
             margin: 10px 0;
+          	/* Center the timer text horizontally */
+          	text-align: center;
         }
         .session-info {
             font-size: 16px;
             color: #cccccc;
             margin-bottom: 10px;
         }
+        /* Larger and Bolder Session Type - Color set dynamically */
         .session-type {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: bold;
             margin-bottom: 10px;
         }
+
         .progress-bar {
             height: 10px;
             border-radius: 5px;
@@ -65,7 +70,19 @@
             display: flex;
             justify-content: space-between;
             width: 80%;
+            font-weight: bold; /* Make labels bold */
         }
+         /* Style for timer box */
+        .timer-box {
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 48px;
+            font-weight: bold;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
         button {
             padding: 10px;
             border: none;
@@ -84,15 +101,25 @@
             border-radius: 5px;
             border: none;
             text-align: center;
+            background: white;
+            color: black;
         }
+        /*Color labels and inputs*/
+        .custom-settings label:nth-child(1) { color: #9317A8; }
+        .custom-settings label:nth-child(1) input { border: 2px solid #9317A8; }
+        .custom-settings label:nth-child(2) { color: #3177C7; }
+        .custom-settings label:nth-child(2) input { border: 2px solid #3177C7; }
+        .custom-settings label:nth-child(3) { color: #3177C7; }
+        .custom-settings label:nth-child(3) input { border: 2px solid #3177C7; }
+
     </style>
 </head>
 <body>
     <div class="timer-container">
         <div class="header">PeakFlowSpace™</div>
-        <div class="time" id="timer">25:00</div>
+        <div class="time timer-box" id="timer">25:00</div>
         <div class="session-info" id="session-info">Set 1/4</div>
-        <div class="session-type" id="session-type" style="color:#9317A8;">Focus</div>
+        <div class="session-type" id="session-type">Focus</div>
         <div class="progress-bar">
             <div class="progress" id="progress"></div>
         </div>
@@ -107,24 +134,41 @@
             <button class="reset-btn" id="reset">Reset</button>
         </div>
     </div>
+
     <script>
-        let focusTime = 25 * 60, shortBreak = 5 * 60, longBreak = 15 * 60;
-        let cycles = 0, isRunning = false, timer, remainingTime = focusTime;
-        let sessionType = 'focus';
-        const progress = document.getElementById("progress");
+      let focusTime = 25 * 60; // Default focus time (in seconds)
+        let shortBreak = 5 * 60;  // Default short break time
+        let longBreak = 15 * 60; // Default long break time
+        let cycles = 0;          // Number of completed focus sessions
+        let isRunning = false;   // Flag to track if the timer is running
+        let timer;             // Variable to store the setInterval ID
+        let remainingTime = focusTime; // Current time remaining (starts with focus time)
+        let sessionType = 'focus';  // Current session type ('focus', 'shortBreak', 'longBreak')
+        const progress = document.getElementById("progress"); // Get progress bar element
         const timerDisplay = document.getElementById("timer");
         const sessionInfo = document.getElementById("session-info");
         const sessionTypeDisplay = document.getElementById("session-type");
-        
+
         function startTimer() {
-            focusTime = document.getElementById("focusTime").value * 60;
-            shortBreak = document.getElementById("shortBreak").value * 60;
-            longBreak = document.getElementById("longBreak").value * 60;
-            if (!isRunning) {
-                isRunning = true;
-                timer = setInterval(updateTimer, 1000);
-            }
+          // Get values from input fields
+          focusTime = parseInt(document.getElementById("focusTime").value) * 60;
+          shortBreak = parseInt(document.getElementById("shortBreak").value) * 60;
+          longBreak = parseInt(document.getElementById("longBreak").value) * 60;
+
+          if (!isRunning) { // Only start if not already running
+              isRunning = true;
+              timer = setInterval(updateTimer, 1000);  // Update every second
+          }
+          // Save the start time whenever the timer starts/resumes
+            localStorage.setItem("pomodoroStartTime", Date.now());
+            localStorage.setItem("pomodoroTimeLeft", remainingTime);
+            localStorage.setItem("pomodoroSessionType", sessionType);
+            localStorage.setItem("pomodoroCycles", cycles);
+            localStorage.setItem("pomodoroIsRunning", isRunning);
+
         }
+
+
         function updateTimer() {
             if (remainingTime > 0) {
                 remainingTime--;
@@ -134,21 +178,28 @@
                 endSession();
             }
         }
-        function updateDisplay() {
-            let minutes = Math.floor(remainingTime / 60);
-            let seconds = remainingTime % 60;
-            timerDisplay.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        }
+
+      function updateDisplay() {
+        let minutes = Math.floor(remainingTime / 60);
+        let seconds = remainingTime % 60;
+        timerDisplay.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+        // Set timer text color based on session type
+        timerDisplay.style.color = sessionType === 'focus' ? '#9317A8' : '#3177C7';
+    }
+
+
         function updateProgress() {
             let totalTime = sessionType === 'focus' ? focusTime : (sessionType === 'shortBreak' ? shortBreak : longBreak);
             let progressPercent = ((totalTime - remainingTime) / totalTime) * 100;
             progress.style.width = `${progressPercent}%`;
-            progress.style.background = sessionType === 'focus' ? '#9317A8' : '#3177C7';
+            progress.style.background = sessionType === 'focus' ? '#9317A8' : '#3177C7';  //Pink or blue.
         }
+
         function endSession() {
-            clearInterval(timer);
+            clearInterval(timer); // Stop the timer
             isRunning = false;
-            new Audio('beep.mp3').play(); // Beep sound when session ends
+            new Audio('beep.mp3').play(); // Assumes you have a 'beep.mp3' file
             if (sessionType === 'focus') {
                 cycles++;
                 sessionType = cycles % 4 === 0 ? 'longBreak' : 'shortBreak';
@@ -157,13 +208,29 @@
                 sessionType = 'focus';
                 remainingTime = focusTime;
             }
+
             sessionInfo.innerText = `Set ${cycles % 4 + 1}/4`;
             sessionTypeDisplay.innerText = sessionType === 'focus' ? 'Focus' : 'Break';
+            // Correctly set the color of the session type
             sessionTypeDisplay.style.color = sessionType === 'focus' ? '#9317A8' : '#3177C7';
-            startTimer();
+
+            // Save Data
+            localStorage.setItem("pomodoroTimeLeft", remainingTime);
+            localStorage.setItem("pomodoroSessionType", sessionType);
+            localStorage.setItem("pomodoroCycles", cycles);
+            localStorage.setItem("pomodoroIsRunning", isRunning);
+
+
+            updateDisplay(); // Update after session change
+            updateProgress();
+            startTimer(); // Auto-start next session
         }
+
+
         document.getElementById("start").addEventListener("click", startTimer);
+
         document.getElementById("skip").addEventListener("click", endSession);
+
         document.getElementById("reset").addEventListener("click", () => {
             clearInterval(timer);
             isRunning = false;
@@ -172,10 +239,57 @@
             remainingTime = focusTime;
             sessionInfo.innerText = "Set 1/4";
             sessionTypeDisplay.innerText = "Focus";
-            sessionTypeDisplay.style.color = "#9317A8";
+            sessionTypeDisplay.style.color = "#9317A8"; // Reset to focus color.
             updateDisplay();
             progress.style.width = "0%";
+
+            localStorage.removeItem("pomodoroStartTime");
+            localStorage.removeItem("pomodoroTimeLeft");
+            localStorage.removeItem("pomodoroSessionType");
+            localStorage.removeItem("pomodoroCycles");
+            localStorage.removeItem("pomodoroIsRunning");
         });
+
+        // Load saved state on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedStartTime = localStorage.getItem("pomodoroStartTime");
+            const savedTimeLeft = localStorage.getItem("pomodoroTimeLeft");
+            const savedSessionType = localStorage.getItem("pomodoroSessionType");
+            const savedCycles = localStorage.getItem("pomodoroCycles");
+            const savedIsRunning = localStorage.getItem("pomodoroIsRunning");
+
+            if (savedStartTime && savedTimeLeft) {
+                const timeElapsed = Math.floor((Date.now() - savedStartTime) / 1000);
+                remainingTime = Math.max(0, parseInt(savedTimeLeft) - timeElapsed);
+                sessionType = savedSessionType;
+                cycles = parseInt(savedCycles);
+                isRunning = savedIsRunning === "true"; // Convert string to boolean
+
+                sessionInfo.innerText = `Set ${cycles % 4 + 1}/4`;
+                sessionTypeDisplay.innerText = sessionType === 'focus' ? 'Focus' : 'Break';
+                // Restore session type color
+                sessionTypeDisplay.style.color = sessionType === 'focus' ? '#9317A8' : '#3177C7';
+
+
+                updateDisplay();
+                updateProgress(); // Initial progress update
+
+                 if (isRunning && remainingTime > 0) {
+                    startTimer();
+                }
+            }
+            else {
+              updateDisplay();
+              updateProgress();
+            }
+
+            // Get initial values from input fields
+            focusTime = parseInt(document.getElementById("focusTime").value) * 60;
+            shortBreak = parseInt(document.getElementById("shortBreak").value) * 60;
+            longBreak = parseInt(document.getElementById("longBreak").value) * 60;
+        });
+
     </script>
 </body>
 </html>
+
