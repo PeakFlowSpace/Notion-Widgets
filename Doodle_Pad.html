@@ -20,8 +20,8 @@
             padding: 15px;
             border-radius: 10px;
             text-align: center;
-            width: 95%;        /* Use a percentage of the parent's width */
-            max-width: 420px; /* But don't exceed 420px */
+            width: 95%;
+            max-width: 420px;
             position: relative;
         }
         .header {
@@ -32,23 +32,26 @@
         }
         .sub-header {
             font-size: 22px;
-            color: #3177C7;
+            color: #3177C7; /* Brand Blue */
             font-weight: bold;
             margin-bottom: 15px;
         }
         canvas {
             background: #444;
             border-radius: 5px;
-            border: 3px solid #9317A8;
-            width: 100%;       /* Full width of the container */
-            height: auto;     /* Maintain aspect ratio */
+            border: 3px solid #9317A8; /* Brand Pink Border*/
+            width: 100%;
+            height: auto;
             cursor: crosshair;
             touch-action: none;
         }
         .buttons {
             margin-top: 15px;
+            display: flex; /* Use flexbox for horizontal layout */
+            flex-wrap: wrap; /* Allow wrapping to a new line if needed */
+            justify-content: center; /* Center buttons horizontally */
         }
-        button {
+        .buttons button {
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -56,7 +59,27 @@
             margin: 5px;
             font-size: 14px;
         }
-        .clear-btn { background: #C73737; color: white; }
+        .clear-btn {
+            background: #C73737;
+            color: white;
+            width: 100%; /* Make clear button full width */
+            order: 2; /* Make the clear-btn render last. */
+        }
+
+        .color-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .color-btn:hover {
+            opacity: 0.8;
+        }
+        .color-buttons {
+            order: 1;
+        }
     </style>
 </head>
 <body>
@@ -65,6 +88,14 @@
         <div class="sub-header">Doodle Pad</div>
         <canvas id="doodleCanvas"></canvas>
         <div class="buttons">
+            <div class="color-buttons">
+                <button class="color-btn" id="color-blue" style="background-color: #3177C7;"></button>
+                <button class="color-btn" id="color-pink" style="background-color: #9118A8;"></button>
+                <button class="color-btn" id="color-red" style="background-color: #e74c3c;"></button>
+                <button class="color-btn" id="color-green" style="background-color: #2ecc71;"></button>
+                <button class="color-btn" id="color-yellow" style="background-color: #F7B900;"></button>
+                <button class="color-btn" id="color-black" style="background-color: black;"></button>
+            </div>
             <button class="clear-btn" id="clear">Clear</button>
         </div>
     </div>
@@ -73,18 +104,17 @@
         const ctx = canvas.getContext("2d");
         let drawing = false;
 
-        // --- Mouse Events (Keep these for desktop) ---
+        // --- Mouse Events ---
         canvas.addEventListener("mousedown", startDrawing);
         canvas.addEventListener("mousemove", draw);
         canvas.addEventListener("mouseup", stopDrawing);
         canvas.addEventListener("mouseout", stopDrawing);
 
-        // --- Touch Events (Add these for touch devices) ---
+        // --- Touch Events ---
         canvas.addEventListener("touchstart", startDrawingTouch);
         canvas.addEventListener("touchmove", drawTouch);
         canvas.addEventListener("touchend", stopDrawingTouch);
-        canvas.addEventListener("touchcancel", stopDrawingTouch); // Handle touch cancel
-
+        canvas.addEventListener("touchcancel", stopDrawingTouch);
 
         function startDrawing(event) {
             drawing = true;
@@ -95,8 +125,6 @@
         function draw(event) {
             if (!drawing) return;
             ctx.lineTo(event.offsetX, event.offsetY);
-            ctx.strokeStyle = "#3177C7";
-            ctx.lineWidth = 2;
             ctx.stroke();
         }
 
@@ -106,14 +134,13 @@
         }
 
         // --- Touch Event Handlers ---
-
         function startDrawingTouch(event) {
-            event.preventDefault(); // Prevent scrolling/zooming
+            event.preventDefault();
             drawing = true;
-            const touch = event.touches[0]; // Get the first touch point
-            const rect = canvas.getBoundingClientRect(); // Get canvas position
-            const x = touch.clientX - rect.left; // Calculate x-coordinate relative to canvas
-            const y = touch.clientY - rect.top;  // Calculate y-coordinate relative to canvas
+            const touch = event.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
             ctx.beginPath();
             ctx.moveTo(x, y);
         }
@@ -126,18 +153,14 @@
             const x = touch.clientX - rect.left;
             const y = touch.clientY - rect.top;
             ctx.lineTo(x, y);
-            ctx.strokeStyle = "#3177C7";
-            ctx.lineWidth = 2;
             ctx.stroke();
         }
 
-
         function stopDrawingTouch(event) {
-            event.preventDefault(); // Prevent other actions.
+            event.preventDefault();
             drawing = false;
-            ctx.closePath(); // Finish the current path
+            ctx.closePath();
         }
-
 
           // --- Canvas Size ---
           function resizeCanvas() {
@@ -151,10 +174,22 @@
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-
         document.getElementById("clear").addEventListener("click", () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         });
+
+        // --- Color Selection ---
+        const colorButtons = document.querySelectorAll('.color-btn');
+        colorButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                ctx.strokeStyle = this.style.backgroundColor;
+            });
+        });
+
+        // Set Default Color - Brand Blue
+        ctx.strokeStyle = "#3177C7";
+        ctx.lineWidth = 2;
     </script>
 </body>
 </html>
+
