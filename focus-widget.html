@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADHD & Focus</title>
+
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="https://peakflowspace.github.io/Notion-Widgets/style.css">
+</head>
+<body>
+    <div class="widget-container">
+        <!-- PeakFlowSpace™ title at the top -->
+        <div class="header">PeakFlowSpace™</div>
+
+        <!-- ADHD and Focus title -->
+        <div class="title">
+            <span><b>ADHD and</b></span> <span class="bold-italic">Focus</span>
+        </div>
+
+        <!-- Tip box -->
+        <div class="tip-box" id="tip-box">Loading...</div>
+
+        <!-- Button to load next tip -->
+        <button class="button" onclick="nextTip()">New Tip</button>
+    </div>
+
+    <script>
+        const tips = [
+            "The <b>5-Second Rule</b> ⏳ – Count down from 5 and take action before you can overthink.",
+            "Body Doubling 👯 – Work next to someone or stream a focus video.",
+            "Change Your Scenery 🌍 – A different workspace can reset your brain.",
+            "Use a Visual Timer ⏲️ – Seeing time pass helps with urgency.",
+            "Make it a Game 🎮 – Race the clock or set rewards for progress.",
+            "Microtasks 📌 – Break tasks into 5-minute chunks to reduce overwhelm.",
+            "Talk It Out 🗣️ – Say your task out loud to trick your brain into commitment.",
+            "Task Roulette 🎰 – Pick a random task just to start; momentum will follow.",
+            "Parkinson’s Law ⚡ – Set fake deadlines to complete tasks faster.",
+            "First 2 Minutes Rule ✅ – If a task takes less than 2 minutes, do it immediately."
+        ];
+        
+        let currentTipIndex = 0;
+        
+        function nextTip() {
+            document.getElementById("tip-box").innerHTML = tips[currentTipIndex];
+            document.getElementById("tip-box").classList.add("show");
+            currentTipIndex = (currentTipIndex + 1) % tips.length;
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            nextTip();
+        });
+    </script>
+</body>
+</html>

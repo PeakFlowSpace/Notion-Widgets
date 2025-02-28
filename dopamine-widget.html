@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADHD & Dopamine</title>
+
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="https://peakflowspace.github.io/Notion-Widgets/style.css">
+</head>
+<body>
+    <div class="widget-container">
+        <!-- PeakFlowSpace™ title at the top -->
+        <div class="header">PeakFlowSpace™</div>
+
+        <!-- ADHD and Dopamine title -->
+        <div class="title">
+            <span><b>ADHD and</b></span> <span class="bold-italic">Dopamine</span>
+        </div>
+
+        <!-- Tip box -->
+        <div class="tip-box" id="tip-box">Loading...</div>
+
+        <!-- Button to load next tip -->
+        <button class="button" onclick="nextTip()">New Tip</button>
+    </div>
+
+    <script>
+        const tips = [
+            "Move Your Body 💃 – Dance, stretch, or do 10 jumping jacks for an instant boost.",
+            "Drink Cold Water ❄️ – Hydration + cold shock = instant dopamine boost.",
+            "Light a Candle 🕯️ – Scents trigger brain focus (peppermint, citrus, etc.).",
+            "Eat Protein 🍳 – Dopamine needs fuel (nuts, eggs, fish).",
+            "Do a Fun Task First 🎢 – Warm up with something enjoyable before hard work.",
+            "Playlist Boost 🎵 – Listen to an ADHD ‘hype’ playlist before starting a task.",
+            "Watch a Funny Clip 😂 – A 30-sec laugh can reset dopamine.",
+            "Go Outside ☀️ – Sunlight = serotonin = dopamine.",
+            "Visual Progress 📊 – Use stickers, streaks, or progress bars for motivation.",
+            "Positive Self-Talk 💪 – Tell yourself, ‘I am the kind of person who…’ and act like it."
+        ];
+        
+        let currentTipIndex = 0;
+        
+        function nextTip() {
+            document.getElementById("tip-box").innerHTML = tips[currentTipIndex];
+            document.getElementById("tip-box").classList.add("show");
+            currentTipIndex = (currentTipIndex + 1) % tips.length;
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            nextTip();
+        });
+    </script>
+</body>
+</html>
