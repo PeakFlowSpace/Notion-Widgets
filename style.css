@@ -19,10 +19,10 @@ body {
 /* Widget Container */
 .widget-container {
     background: #202020 !important;
-    padding: 12px; /* Increased left/right padding by 20% */
+    padding: 9px; /* Increased left/right padding by 20% */
     padding-bottom: 20px; /* Kept bottom padding */
-    border-radius: 10px;
-    width: 320px;
+    border-radius: 8px;
+    width: 300px;
     text-align: center;
     overflow: hidden;
     position: relative;
@@ -55,7 +55,7 @@ body {
 /* Quote Box (Tip) */
 .tip-box {
     background: transparent !important;
-    padding: 15px;
+    padding: 8px;
     border-radius: 8px;
     font-size: 15px;
     color: #EAEAEA; /* Improved contrast */
