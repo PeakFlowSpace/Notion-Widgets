@@ -58,7 +58,7 @@ body {
     padding: 8px;
     border-radius: 8px;
     font-size: 15px;
-    color: #F5F5F5 !important; /* Ensure text stays bright */
+    color: #FFFFFF !important; /* Force bright white */
     font-style: italic;
     text-align: left;
     white-space: normal;
@@ -71,8 +71,10 @@ body {
 
 /* Fully visible state */
 .tip-box.show {
-    opacity: 1; /* Fade in fully */
+    opacity: 1;
+    color: #FFFFFF !important; /* Forcefully override any other styles */
 }
+
 
 /* Button */
 .button {
