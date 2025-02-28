@@ -1,19 +1,14 @@
-/* style.css */
-
-/* Import the Roboto font (replace with your preferred font) */
+/* Import the Roboto font */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-html,
-body {
+html, body {
     margin: 0;
     padding: 0;
-    /* Remove overflow: hidden to avoid unnecessary scrollbars */
     background-color: transparent !important;
 }
 
 body {
     font-family: 'Roboto', sans-serif;
-    /* Use Roboto as the primary font */
     color: #fff;
     display: flex;
     justify-content: center;
@@ -21,74 +16,64 @@ body {
     height: 100vh;
 }
 
+/* Widget Container */
 .widget-container {
     background: #202020 !important;
-    /* Darken the grey background */
-    padding: 10px;
-    /* Reduce top/left/right padding by 50% */
-    padding-bottom: 20px;
-    /* Keep bottom padding */
+    padding: 10px; /* Reduced top/side padding */
+    padding-bottom: 20px; /* Kept bottom padding */
     border-radius: 10px;
     width: 320px;
     text-align: center;
-    /* Remove box-shadow */
     overflow: hidden;
-    /* Prevents content from spilling out */
     position: relative;
 }
 
+/* PeakFlowSpace™ Title */
 .header {
     font-size: 13px;
-    color: #379AD3;
-    /* PeakFlowSpace™ in blue */
+    color: #379AD3; /* Blue */
     font-weight: normal;
-    margin-bottom: 5px;
-    /* Reduce space between title and quote by 50% */
+    margin-bottom: 5px; /* Reduced space between title and quote */
 }
 
+/* ADHD and [Topic] Title */
 .title {
-    /* New class for the "ADHD and [Topic]" section */
     font-size: 18px;
-    color: #9317A8;
-    /* Pink color */
+    color: #9317A8; /* Pink */
     font-weight: bold;
-    margin-bottom: 7.5px;
-    /* Reduce space between quote and button by 50% */
+    margin-bottom: 5px; /* Adjusted spacing */
 }
 
 .title span:first-child {
-    /* Style for "ADHD and" */
     font-weight: bold;
 }
 
 .title span:last-child {
-    /* Style for "[Topic]" */
     font-style: italic;
 }
 
+/* Quote Box (Tip) */
 .tip-box {
     background: transparent !important;
     padding: 15px;
     border-radius: 8px;
     font-size: 15px;
-    color: #ccc;
-    /* Light gray text */
+    color: #EAEAEA; /* FIXED: Improved contrast */
     font-style: italic;
     text-align: left;
     white-space: normal;
     line-height: 1.5;
     word-wrap: break-word;
-    margin-bottom: 15px;
-    /* Add fade transition */
-    opacity: 0;
+    margin-bottom: 10px; /* Reduced space between quote & button */
+}
+
+/* Fade-in Fix */
+.tip-box.show {
+    opacity: 1;
     transition: opacity 0.3s ease-in-out;
 }
 
-.tip-box.show {
-    /* Class to trigger fade-in */
-    opacity: 1;
-}
-
+/* Button */
 .button {
     background: #9317a8;
     color: white;
@@ -103,7 +88,7 @@ body {
     background: #7d5a85;
 }
 
-/* Loading spinner styles (you can customize these) */
+/* Loading Spinner */
 .loading-spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
     border-left-color: #379AD3;
@@ -115,11 +100,6 @@ body {
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
