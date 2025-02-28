@@ -19,7 +19,7 @@ body {
 /* Widget Container */
 .widget-container {
     background: #202020 !important;
-    padding: 10px; /* Reduced top/side padding */
+    padding: 12px; /* Increased left/right padding by 20% */
     padding-bottom: 20px; /* Kept bottom padding */
     border-radius: 10px;
     width: 320px;
@@ -33,7 +33,7 @@ body {
     font-size: 13px;
     color: #379AD3; /* Blue */
     font-weight: normal;
-    margin-bottom: 5px; /* Reduced space between title and quote */
+    margin-bottom: 4px; /* Reduced space between title and quote */
 }
 
 /* ADHD and [Topic] Title */
@@ -41,7 +41,7 @@ body {
     font-size: 18px;
     color: #9317A8; /* Pink */
     font-weight: bold;
-    margin-bottom: 5px; /* Adjusted spacing */
+    margin-bottom: 4px; /* Reduced space between title and quote */
 }
 
 .title span:first-child {
@@ -58,13 +58,13 @@ body {
     padding: 15px;
     border-radius: 8px;
     font-size: 15px;
-    color: #EAEAEA; /* FIXED: Improved contrast */
+    color: #EAEAEA; /* Improved contrast */
     font-style: italic;
     text-align: left;
     white-space: normal;
     line-height: 1.5;
     word-wrap: break-word;
-    margin-bottom: 10px; /* Reduced space between quote & button */
+    margin-bottom: 7px; /* Reduced space between quote & button */
 }
 
 /* Fade-in Fix */
