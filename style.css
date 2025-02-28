@@ -58,7 +58,7 @@ body {
     padding: 8px;
     border-radius: 8px;
     font-size: 15px;
-    color: #FFFFFF !important; /* Force bright white */
+    color: #ededed !important; /* Force bright  */
     font-style: italic;
     text-align: left;
     white-space: normal;
@@ -72,7 +72,7 @@ body {
 /* Fully visible state */
 .tip-box.show {
     opacity: 1;
-    color: #FFFFFF !important; /* Forcefully override any other styles */
+    color: #ededed !important; /* Forcefully override any other styles */
 }
 
 
