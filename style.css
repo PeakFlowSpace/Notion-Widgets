@@ -20,9 +20,9 @@ body {
 .widget-container {
     background: #202020 !important;
     padding: 9px; /* Increased left/right padding by 20% */
-    padding-bottom: 20px; /* Kept bottom padding */
+    padding-bottom: 15px; /* Kept bottom padding */
     border-radius: 8px;
-    width: 300px;
+    width: 270px;
     text-align: center;
     overflow: hidden;
     position: relative;
@@ -41,7 +41,7 @@ body {
     font-size: 18px;
     color: #c73ce0; /* Pink */
     font-weight: bold;
-    margin-bottom: 4px; /* Reduced space between title and quote */
+    margin-bottom: 2px; /* Reduced space between title and quote */
 }
 
 .title span:first-child {
@@ -69,8 +69,8 @@ body {
 
 /* Fade-in Fix */
 .tip-box.show {
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+    opacity: 0.5;
+    transition: opacity 0.8s ease-in-out;
 }
 
 /* Button */
