@@ -4,99 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADHD & Work</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
-html, body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* Prevents unwanted scrollbars */
-    background-color: transparent !important; /* Ensures full transparency */
-}
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="https://peakflowspace.github.io/Notion-Widgets/style.css">
 
-body {
-    font-family: Arial, sans-serif;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-/* Keeps the grey outer card */
-.widget-container {
-    background: #2e2e2e !important; /* Restores grey background */
-    padding: 20px;
-    border-radius: 10px;
-    width: 320px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Keeps shadow effect */
-    overflow: hidden; /* Prevents scrollbars */
-    position: relative;
-}
-
-/* PeakFlowSpace™ (non-bold) */
-.header {
-    font-size: 13px; /* Slightly smaller */
-    color: white;
-    font-weight: normal;
-    margin-bottom: 10px;
-}
-
-/* Inner tip box with pink border */
-.tip-box {
-    background: transparent !important; /* Ensures inner area is transparent */
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 15px; /* Slightly smaller text */
-    font-style: italic;
-    text-align: left;
-    white-space: normal;
-    line-height: 1.5;
-    word-wrap: break-word;
-    margin-bottom: 15px; /* Adds space between tip and button */
-}
-
-/* Button styling */
-.button {
-    background: #9317a8;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-.button:hover {
-    background: #7d5a85;
-}
-    </style>
 </head>
 <body>
     <div class="widget-container">
-        <div class="header">PeakFlowSpace™</div>
-        <div class="tip-box" id="tip-box">Loading...</div>
-        <button class="button" onclick="nextTip()">New Tip</button>
-    </div>
-
-    <script>
-        const tips = [
-            "<b>ADHD brains struggle with unstructured work</b> ⏳. Block out <b>time for specific tasks</b> instead of just 'working.'",
-            "<b>Email & notifications wreck focus</b> 📩. Mute everything except <b>mission-critical alerts</b> to stay in deep work mode.",
-            "<b>Task-switching is exhausting</b> 🔄. Group <b>similar tasks together</b> so your brain doesn’t have to keep resetting.",
-            "<b>Start your day with a quick win</b> 🎯. A <b>5-minute task</b> gets dopamine flowing & makes bigger tasks feel easier."
-        ];
-        
-        let currentTipIndex = 0;
-        
-        function nextTip() {
-            document.getElementById("tip-box").innerHTML = tips[currentTipIndex];
-            currentTipIndex = (currentTipIndex + 1) % tips.length;
-        }
-        
-        document.addEventListener("DOMContentLoaded", function() {
-            nextTip();
-        });
-    </script>
-</body>
-</html>
+        <!-- PeakFlowSpace™ title at the top -->
+        <div class="header">PeakFlowSpa
