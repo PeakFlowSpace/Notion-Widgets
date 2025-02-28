@@ -58,7 +58,7 @@ body {
     padding: 8px;
     border-radius: 8px;
     font-size: 15px;
-    color: #F5F5F5 !important; /* Improved contrast */
+    color: #e2e2e2 !important; /* Improved contrast */
     font-style: italic;
     text-align: left;
     white-space: normal;
@@ -69,8 +69,8 @@ body {
 
 /* Fade-in Fix */
 .tip-box.show {
-    opacity: 0.5;
-    transition: opacity 0.8s ease-in-out;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
 }
 
 /* Button */
