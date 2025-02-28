@@ -3,15 +3,17 @@
 /* Import the Roboto font (replace with your preferred font) */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-html, body { 
+html,
+body {
     margin: 0;
     padding: 0;
-    /* Remove overflow: hidden to avoid unnecessary scrollbars */ 
-    background-color: transparent !important; 
+    /* Remove overflow: hidden to avoid unnecessary scrollbars */
+    background-color: transparent !important;
 }
 
 body {
-    font-family: 'Roboto', sans-serif; /* Use Roboto as the primary font */
+    font-family: 'Roboto', sans-serif;
+    /* Use Roboto as the primary font */
     color: #fff;
     display: flex;
     justify-content: center;
@@ -20,36 +22,47 @@ body {
 }
 
 .widget-container {
-    background: #202020 !important; /* Darken the grey background */
-    padding: 10px; /* Reduce top/left/right padding by 50% */
-    padding-bottom: 20px; /* Keep bottom padding */
+    background: #202020 !important;
+    /* Darken the grey background */
+    padding: 10px;
+    /* Reduce top/left/right padding by 50% */
+    padding-bottom: 20px;
+    /* Keep bottom padding */
     border-radius: 10px;
     width: 320px;
     text-align: center;
     /* Remove box-shadow */
-    overflow: hidden; /* Prevents content from spilling out */
+    overflow: hidden;
+    /* Prevents content from spilling out */
     position: relative;
 }
 
 .header {
     font-size: 13px;
-    color: #379AD3; /* PeakFlowSpace™ in blue */
+    color: #379AD3;
+    /* PeakFlowSpace™ in blue */
     font-weight: normal;
-    margin-bottom: 5px; /* Reduce space between title and quote by 50% */
+    margin-bottom: 5px;
+    /* Reduce space between title and quote by 50% */
 }
 
-.title { /* New class for the "ADHD and [Topic]" section */
+.title {
+    /* New class for the "ADHD and [Topic]" section */
     font-size: 18px;
-    color: #9317A8; /* Pink color */
+    color: #9317A8;
+    /* Pink color */
     font-weight: bold;
-    margin-bottom: 7.5px; /* Reduce space between quote and button by 50% */
+    margin-bottom: 7.5px;
+    /* Reduce space between quote and button by 50% */
 }
 
-.title span:first-child { /* Style for "ADHD and" */
+.title span:first-child {
+    /* Style for "ADHD and" */
     font-weight: bold;
 }
 
-.title span:last-child { /* Style for "[Topic]" */
+.title span:last-child {
+    /* Style for "[Topic]" */
     font-style: italic;
 }
 
@@ -58,18 +71,21 @@ body {
     padding: 15px;
     border-radius: 8px;
     font-size: 15px;
+    color: #ccc;
+    /* Light gray text */
     font-style: italic;
     text-align: left;
     white-space: normal;
     line-height: 1.5;
     word-wrap: break-word;
-    margin-bottom: 15px; 
+    margin-bottom: 15px;
     /* Add fade transition */
-    opacity: 0; 
+    opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
 
-.tip-box.show { /* Class to trigger fade-in */
+.tip-box.show {
+    /* Class to trigger fade-in */
     opacity: 1;
 }
 
@@ -95,10 +111,15 @@ body {
     width: 24px;
     height: 24px;
     animation: spin 1s linear infinite;
-    margin: 20px auto; 
+    margin: 20px auto;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
