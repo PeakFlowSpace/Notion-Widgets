@@ -58,7 +58,7 @@ body {
     padding: 8px;
     border-radius: 8px;
     font-size: 15px;
-    color: #F5F5F5; /* Improved contrast */
+    color: #F5F5F5 !important; /* Improved contrast */
     font-style: italic;
     text-align: left;
     white-space: normal;
