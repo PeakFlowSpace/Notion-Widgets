@@ -52,28 +52,29 @@ body {
     font-style: italic;
 }
 
-/* Fix Fade-in Transition */
+/* Fade-in Transition with Softer White */
 .tip-box {
     background: transparent !important;
     padding: 8px;
     border-radius: 8px;
     font-size: 15px;
-    color: #ededed !important; /* Force bright  */
+    color: #D6D6D6 !important; /* Slightly softer white */
     font-style: italic;
     text-align: left;
     white-space: normal;
     line-height: 1.5;
     word-wrap: break-word;
     margin-bottom: 7px;
-    opacity: 0; /* Start fully hidden */
-    transition: opacity 0.8s ease-in-out;
+    opacity: 0.3; /* Start dim */
+    transition: opacity 1.2s ease-in-out, color 1.2s ease-in-out;
 }
 
-/* Fully visible state */
+/* Fully visible state (brighter but not pure white) */
 .tip-box.show {
     opacity: 1;
-    color: #ededed !important; /* Forcefully override any other styles */
+    color: #EAEAEA !important; /* Slightly off-white for readability */
 }
+
 
 
 /* Button */
